@@ -1,0 +1,12 @@
+venv/
+__pycache__/
+*.pyc
+node_modules/
+.next/
+.env.local
+*.pt
+*.onnx
+*.bin
+models_weights/
+checkpoints/
+Thumbs.db

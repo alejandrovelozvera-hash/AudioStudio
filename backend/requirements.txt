@@ -1,0 +1,25 @@
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+python-multipart==0.0.9
+pydantic-settings==2.5.2
+
+# Audio processing
+soundfile==0.12.1
+librosa==0.10.2
+pyloudnorm==0.1.1
+numpy==1.26.4
+scipy==1.14.1
+
+# AI models
+torch==2.4.1
+torchaudio==2.4.1
+resemble-enhance==0.0.1
+deepfilternet==0.5.6
+faster-whisper==1.0.3
+
+# Jobs / queue
+celery==5.4.0
+redis==5.0.8
+
+# Storage (S3/R2 compatible)
+boto3==1.35.24
