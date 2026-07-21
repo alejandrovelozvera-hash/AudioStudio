@@ -34,7 +34,7 @@ function Hero() {
   return (
     <section className="mx-auto max-w-4xl px-6 pb-20 pt-16 text-center">
       <p className="mb-4 font-mono text-xs uppercase tracking-widest text-studio-signal">
-        Grabación · Mejora con IA · Edición basada en texto
+        Grabacion - Mejora con IA - Edicion basada en texto
       </p>
       <h1 className="mb-6 font-display text-5xl font-medium leading-tight tracking-tight text-studio-bone sm:text-6xl">
         Tu voz, con calidad
@@ -43,7 +43,7 @@ function Hero() {
       </h1>
       <p className="mx-auto mb-10 max-w-2xl font-serif text-xl italic text-studio-dim">
         StudioAI limpia el ruido de fondo, repara el timbre de tu voz y te deja
-        editar el audio simplemente borrando palabras del texto — como editar
+        editar el audio simplemente borrando palabras del texto, como editar
         un documento, no una pista de audio.
       </p>
       <div className="flex items-center justify-center gap-4">
@@ -57,7 +57,7 @@ function Hero() {
           href="#como-funciona"
           className="rounded-md border border-studio-line px-6 py-3 text-sm text-studio-bone transition-colors hover:border-studio-signal hover:text-studio-signal"
         >
-          Ver cómo funciona
+          Ver como funciona
         </a>
       </div>
     </section>
@@ -69,13 +69,13 @@ function WhatIsIt() {
     <section className="border-y border-studio-line bg-studio-panel">
       <div className="mx-auto max-w-4xl px-6 py-16">
         <h2 className="mb-4 font-display text-sm font-medium uppercase tracking-widest text-studio-signal">
-          Qué es StudioAI
+          Que es StudioAI
         </h2>
         <p className="font-serif text-2xl leading-relaxed text-studio-bone">
-          Es una herramienta de grabación y edición de audio que usa
+          Es una herramienta de grabacion y edicion de audio que usa
           inteligencia artificial para hacer el trabajo pesado por ti:
-          elimina el ruido de fondo, nivela el volumen automáticamente y
-          transcribe todo lo que dices — para que edites tu audio con la
+          elimina el ruido de fondo, nivela el volumen automaticamente y
+          transcribe todo lo que dices, para que edites tu audio con la
           misma facilidad con la que editas un texto.
         </p>
       </div>
@@ -87,17 +87,17 @@ const FEATURES = [
   {
     title: "Mejora de audio con IA",
     description:
-      "Elimina ruido de fondo, reverb de sala y nivela el volumen automáticamente al estándar de podcast, con un clic.",
+      "Elimina ruido de fondo, reverb de sala y nivela el volumen automaticamente al estandar de podcast, con un clic.",
   },
   {
-    title: "Edición basada en texto",
+    title: "Edicion basada en texto",
     description:
-      "Transcribimos tu audio automáticamente. Borra una palabra del texto y el fragmento correspondiente desaparece del audio.",
+      "Transcribimos tu audio automaticamente. Borra una palabra del texto y el fragmento correspondiente desaparece del audio.",
   },
   {
     title: "Calidad de estudio",
     description:
-      "Todo el procesamiento exporta en 48kHz / 24-bit, el estándar profesional de post-producción de audio.",
+      "Todo el procesamiento exporta en 48kHz / 24-bit, el estandar profesional de post-produccion de audio.",
   },
 ];
 
@@ -105,7 +105,7 @@ function Features() {
   return (
     <section className="mx-auto max-w-6xl px-6 py-20">
       <h2 className="mb-12 text-center font-display text-3xl font-medium tracking-tight text-studio-bone">
-        Qué puedes hacer
+        Que puedes hacer
       </h2>
       <div className="grid gap-6 sm:grid-cols-3">
         {FEATURES.map((f) => (
@@ -125,9 +125,9 @@ function Features() {
 }
 
 const STEPS = [
-  { n: "01", title: "Sube tu audio", description: "Cualquier grabación: voz, podcast, entrevista." },
+  { n: "01", title: "Sube tu audio", description: "Cualquier grabacion: voz, podcast, entrevista." },
   { n: "02", title: "Se transcribe solo", description: "En segundos aparece el texto, palabra por palabra, sincronizado con el audio." },
-  { n: "03", title: "Edita el texto", description: "Borra una palabra y ese tramo se elimina del audio — sin tocar una forma de onda." },
+  { n: "03", title: "Edita el texto", description: "Borra una palabra y ese tramo se elimina del audio, sin tocar una forma de onda." },
   { n: "04", title: "Aplica la mejora IA", description: "Un clic limpia el ruido y nivela el volumen a calidad de estudio." },
 ];
 
@@ -136,7 +136,7 @@ function HowItWorks() {
     <section id="como-funciona" className="border-y border-studio-line bg-studio-panel">
       <div className="mx-auto max-w-4xl px-6 py-20">
         <h2 className="mb-12 text-center font-display text-3xl font-medium tracking-tight text-studio-bone">
-          Cómo funciona
+          Como funciona
         </h2>
         <div className="space-y-8">
           {STEPS.map((s) => (
@@ -179,7 +179,7 @@ function Footer() {
   return (
     <footer className="border-t border-studio-line px-6 py-8 text-center">
       <p className="font-mono text-xs text-studio-dim">
-        StudioAI — grabación, mejora y edición de audio con IA
+        StudioAI, grabacion, mejora y edicion de audio con IA
       </p>
     </footer>
   );
