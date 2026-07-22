@@ -1,17 +1,15 @@
 """
 transcribe.py
 -------------
-Transcripción con timestamps a nivel de palabra usando faster-whisper.
-Esta es la base de la "edición basada en texto": cada palabra devuelta
-trae su rango [start, end] en segundos, que el frontend usa para mapear
-texto -> audio.
+Transcripcion con timestamps por palabra usando faster-whisper.
+Usa el modelo "small" (multilingue) en vez de distil-large-v3 para
+reducir drasticamente el uso de RAM (necesario en Railway con 512MB).
 """
 
 from faster_whisper import WhisperModel
+import gc
 
-# distil-large-v3: ~6x más rápido que large-v3 con accuracy casi idéntico.
-# Usar "large-v3" si se prioriza precisión máxima sobre velocidad.
-MODEL_SIZE = "distil-large-v3"
+MODEL_SIZE = "small"
 
 _model = None
 
@@ -19,39 +17,18 @@ _model = None
 def _get_model() -> WhisperModel:
     global _model
     if _model is None:
-        # compute_type="float16" si hay GPU; "int8" en CPU para mayor velocidad
-        import torch
-        device = "cuda" if torch.cuda.is_available() else "cpu"
-        compute_type = "float16" if device == "cuda" else "int8"
-        _model = WhisperModel(MODEL_SIZE, device=device, compute_type=compute_type)
+        _model = WhisperModel(MODEL_SIZE, device="cpu", compute_type="int8")
     return _model
 
 
 def transcribe_with_word_timestamps(audio_path: str, language: str | None = "es") -> dict:
-    """
-    Transcribe un archivo de audio y devuelve texto + timestamps por palabra.
-
-    Args:
-        audio_path: ruta al archivo de audio
-        language: código de idioma ("es", "en", etc.) o None para auto-detectar
-
-    Returns:
-        {
-          "text": "transcripción completa...",
-          "words": [
-              {"word": "Hola", "start": 0.0, "end": 0.32},
-              {"word": "mundo", "start": 0.35, "end": 0.71},
-              ...
-          ]
-        }
-    """
     model = _get_model()
 
     segments, info = model.transcribe(
         audio_path,
         language=language,
-        word_timestamps=True,   # clave para la edición basada en texto
-        vad_filter=True,        # filtra silencios usando Voice Activity Detection
+        word_timestamps=True,
+        vad_filter=True,
     )
 
     all_words = []
@@ -67,8 +44,11 @@ def transcribe_with_word_timestamps(audio_path: str, language: str | None = "es"
                     "end": round(w.end, 3),
                 })
 
-    return {
+    result = {
         "text": " ".join(full_text_parts),
         "words": all_words,
         "detected_language": info.language,
     }
+
+    gc.collect()
+    return result
