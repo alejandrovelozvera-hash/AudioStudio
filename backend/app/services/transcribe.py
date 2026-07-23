@@ -1,28 +1,19 @@
 """
 transcribe.py
 -------------
-Transcripcion con timestamps por palabra usando faster-whisper.
-Usa el modelo "small" (multilingue) en vez de distil-large-v3 para
-reducir drasticamente el uso de RAM (necesario en Railway con 512MB).
+Transcripcion con faster-whisper. El modelo se carga y se libera de la
+RAM en cada uso, para evitar que conviva en memoria junto con el modelo
+de enhance en entornos con poca RAM (Railway free tier: 512MB).
 """
 
-from faster_whisper import WhisperModel
 import gc
+from faster_whisper import WhisperModel
 
 MODEL_SIZE = "small"
 
-_model = None
-
-
-def _get_model() -> WhisperModel:
-    global _model
-    if _model is None:
-        _model = WhisperModel(MODEL_SIZE, device="cpu", compute_type="int8")
-    return _model
-
 
 def transcribe_with_word_timestamps(audio_path: str, language: str | None = "es") -> dict:
-    model = _get_model()
+    model = WhisperModel(MODEL_SIZE, device="cpu", compute_type="int8")
 
     segments, info = model.transcribe(
         audio_path,
@@ -50,5 +41,7 @@ def transcribe_with_word_timestamps(audio_path: str, language: str | None = "es"
         "detected_language": info.language,
     }
 
+    del model
     gc.collect()
+
     return result

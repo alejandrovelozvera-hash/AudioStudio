@@ -1,8 +1,10 @@
 """
 enhance.py
 ----------
-Pipeline de mejora de audio, optimizado para poca RAM (Railway 512MB).
-Limita hilos de PyTorch y libera memoria activamente tras cada trabajo.
+Pipeline de mejora de audio. El modelo DeepFilterNet3 se carga y se
+libera de la RAM en cada uso (no se mantiene cacheado), para evitar
+que conviva en memoria junto con el modelo de transcripcion en
+entornos con poca RAM (Railway free tier: 512MB).
 """
 
 import gc
@@ -19,28 +21,22 @@ from app.core.audio_utils import (
 torch.set_num_threads(1)
 
 DEFAULT_TARGET_LUFS = -16.0
-_device = "cpu"
-
-_df_model = None
-_df_state = None
-
-
-def _load_deepfilternet():
-    global _df_model, _df_state
-    if _df_model is None:
-        from df.enhance import init_df
-        _df_model, _df_state, _ = init_df()
-    return _df_model, _df_state
 
 
 def _apply_deepfilternet(audio: np.ndarray, sr: int) -> np.ndarray:
-    from df.enhance import enhance as df_enhance
-    import torch as t
+    """Carga DeepFilterNet3, procesa el audio, y libera el modelo de inmediato."""
+    from df.enhance import init_df, enhance as df_enhance
 
-    model, state = _load_deepfilternet()
-    audio_tensor = t.from_numpy(audio).unsqueeze(0)
+    model, state, _ = init_df()
+
+    audio_tensor = torch.from_numpy(audio).unsqueeze(0)
     enhanced = df_enhance(model, state, audio_tensor)
-    return enhanced.squeeze(0).cpu().numpy()
+    result = enhanced.squeeze(0).cpu().numpy()
+
+    del model, state, audio_tensor, enhanced
+    gc.collect()
+
+    return result
 
 
 def _normalize_loudness(audio: np.ndarray, sr: int, target_lufs: float = DEFAULT_TARGET_LUFS) -> np.ndarray:
