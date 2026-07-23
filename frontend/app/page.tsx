@@ -1,11 +1,13 @@
 import Link from "next/link";
 import AnimatedWaveform from "@/components/AnimatedWaveform";
+import ProcessAnimation from "@/components/ProcessAnimation";
 import Reveal from "@/components/Reveal";
+import StickyNav from "@/components/StickyNav";
 
 export default function LandingPage() {
   return (
     <div className="min-h-screen overflow-x-hidden">
-      <Nav />
+      <StickyNav />
       <Hero />
       <WhatIsIt />
       <Features />
@@ -16,22 +18,13 @@ export default function LandingPage() {
   );
 }
 
-function Nav() {
-  return (
-    <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
-      <span className="font-display text-lg font-medium tracking-tight text-studio-bone">
-        Studio<span className="text-studio-signal">AI</span>
-      </span>
-      <Link href="/editor/demo" className="rounded-full border border-studio-line px-4 py-1.5 text-sm text-studio-bone transition-colors hover:border-studio-signal hover:text-studio-signal">
-        Abrir editor
-      </Link>
-    </header>
-  );
-}
-
 function Hero() {
   return (
-    <section className="mx-auto max-w-4xl px-6 pb-8 pt-16 text-center">
+    <section className="relative mx-auto max-w-4xl px-6 pb-8 pt-20 text-center">
+      <div
+        className="pointer-events-none absolute left-1/2 top-0 -z-10 h-[500px] w-[800px] -translate-x-1/2 rounded-full opacity-20 blur-[120px]"
+        style={{ background: "radial-gradient(circle, #5EEAD4 0%, transparent 70%)" }}
+      />
       <Reveal>
         <p className="mb-4 font-mono text-xs uppercase tracking-widest text-studio-signal">
           Grabacion - Mejora con IA - Edicion basada en texto
@@ -49,7 +42,7 @@ function Hero() {
       </Reveal>
       <Reveal delay={0.3}>
         <div className="mb-4 flex items-center justify-center gap-4">
-          <Link href="/editor/demo" className="rounded-md bg-studio-signal px-6 py-3 text-sm font-medium text-studio-bg transition-opacity hover:opacity-90">
+          <Link href="/editor/demo" className="rounded-md bg-studio-signal px-6 py-3 text-sm font-medium text-studio-bg transition-transform hover:scale-105 hover:opacity-90">
             Probar el editor
           </Link>
           <Link href="/#como-funciona" className="rounded-md border border-studio-line px-6 py-3 text-sm text-studio-bone transition-colors hover:border-studio-signal hover:text-studio-signal">
@@ -100,7 +93,7 @@ function Features() {
       <div className="grid gap-6 sm:grid-cols-3">
         {FEATURES.map((f, i) => (
           <Reveal key={f.title} delay={i * 0.12}>
-            <div className="h-full rounded-lg border border-studio-line bg-studio-panel p-6 transition-colors hover:border-studio-signal/50">
+            <div className="h-full rounded-lg border border-studio-line bg-studio-panel p-6 transition-all hover:-translate-y-1 hover:border-studio-signal/50">
               <h3 className="mb-2 font-display text-lg font-medium text-studio-bone">{f.title}</h3>
               <p className="text-sm leading-relaxed text-studio-dim">{f.description}</p>
             </div>
@@ -121,24 +114,29 @@ const STEPS = [
 function HowItWorks() {
   return (
     <section id="como-funciona" className="border-y border-studio-line bg-studio-panel">
-      <div className="mx-auto max-w-4xl px-6 py-20">
+      <div className="mx-auto max-w-5xl px-6 py-20">
         <Reveal>
           <h2 className="mb-12 text-center font-display text-3xl font-medium tracking-tight text-studio-bone">
             Como funciona
           </h2>
         </Reveal>
-        <div className="space-y-8">
-          {STEPS.map((s, i) => (
-            <Reveal key={s.n} delay={i * 0.1}>
-              <div className="flex gap-6">
-                <span className="font-mono text-2xl text-studio-signal">{s.n}</span>
-                <div>
-                  <h3 className="mb-1 font-display text-base font-medium text-studio-bone">{s.title}</h3>
-                  <p className="text-sm text-studio-dim">{s.description}</p>
+        <div className="grid gap-10 md:grid-cols-2 md:items-center">
+          <div className="space-y-8">
+            {STEPS.map((s, i) => (
+              <Reveal key={s.n} delay={i * 0.1}>
+                <div className="flex gap-6">
+                  <span className="font-mono text-2xl text-studio-signal">{s.n}</span>
+                  <div>
+                    <h3 className="mb-1 font-display text-base font-medium text-studio-bone">{s.title}</h3>
+                    <p className="text-sm text-studio-dim">{s.description}</p>
+                  </div>
                 </div>
-              </div>
-            </Reveal>
-          ))}
+              </Reveal>
+            ))}
+          </div>
+          <Reveal delay={0.2}>
+            <ProcessAnimation />
+          </Reveal>
         </div>
       </div>
     </section>
@@ -155,7 +153,7 @@ function FinalCta() {
         <p className="mb-8 text-studio-dim">
           No necesitas cuenta ni instalar nada. Sube un audio y prueba el editor ahora mismo.
         </p>
-        <Link href="/editor/demo" className="inline-block rounded-md bg-studio-signal px-8 py-3 text-sm font-medium text-studio-bg transition-opacity hover:opacity-90">
+        <Link href="/editor/demo" className="inline-block rounded-md bg-studio-signal px-8 py-3 text-sm font-medium text-studio-bg transition-transform hover:scale-105 hover:opacity-90">
           Abrir el editor
         </Link>
       </Reveal>
