@@ -1,6 +1,8 @@
 import Link from "next/link";
 import AnimatedWaveform from "@/components/AnimatedWaveform";
 import ProcessAnimation from "@/components/ProcessAnimation";
+import BeforeAfterPlayer from "@/components/BeforeAfterPlayer";
+import EditorMockup from "@/components/EditorMockup";
 import Reveal from "@/components/Reveal";
 import StickyNav from "@/components/StickyNav";
 
@@ -9,7 +11,10 @@ export default function LandingPage() {
     <div className="min-h-screen overflow-x-hidden">
       <StickyNav />
       <Hero />
+      <Credibility />
+      <BeforeAfter />
       <WhatIsIt />
+      <EditorPreview />
       <Features />
       <HowItWorks />
       <FinalCta />
@@ -37,7 +42,8 @@ function Hero() {
       </Reveal>
       <Reveal delay={0.2}>
         <p className="mx-auto mb-10 max-w-2xl font-serif text-xl italic text-studio-dim">
-          StudioAI limpia el ruido de fondo, repara el timbre de tu voz y te deja editar el audio simplemente borrando palabras del texto.
+          Graba una entrevista con el ruido de la calle de fondo. StudioAI lo limpia,
+          te deja editar borrando palabras del texto, y exporta con calidad de estudio.
         </p>
       </Reveal>
       <Reveal delay={0.3}>
@@ -57,19 +63,77 @@ function Hero() {
   );
 }
 
-function WhatIsIt() {
+function Credibility() {
+  return (
+    <section className="mx-auto max-w-2xl px-6 pb-16 text-center">
+      <Reveal>
+        <p className="font-serif text-base italic text-studio-dim">
+          Hecho por Alejandro Veloz, cineasta y desarrollador. Nacio de la
+          necesidad real de limpiar audio de entrevistas y documentales
+          grabados en condiciones lejos de un estudio.
+        </p>
+      </Reveal>
+    </section>
+  );
+}
+
+function BeforeAfter() {
   return (
     <section className="border-y border-studio-line bg-studio-panel">
-      <div className="mx-auto max-w-4xl px-6 py-16">
+      <div className="mx-auto max-w-3xl px-6 py-20 text-center">
         <Reveal>
-          <h2 className="mb-4 font-display text-sm font-medium uppercase tracking-widest text-studio-signal">
-            Que es StudioAI
+          <h2 className="mb-3 font-display text-3xl font-medium tracking-tight text-studio-bone">
+            Escucha la diferencia
           </h2>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <p className="font-serif text-2xl leading-relaxed text-studio-bone">
-            Es una herramienta de grabacion y edicion de audio que usa inteligencia artificial para hacer el trabajo pesado por ti: elimina el ruido de fondo, nivela el volumen automaticamente y transcribe todo lo que dices, para que edites tu audio con la misma facilidad con la que editas un texto.
+          <p className="mb-10 text-studio-dim">
+            No lo describimos, lo escuchas. Este es el mismo clip, antes y despues.
           </p>
+        </Reveal>
+        <Reveal delay={0.15}>
+          <BeforeAfterPlayer />
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
+function WhatIsIt() {
+  return (
+    <section className="mx-auto max-w-4xl px-6 py-16">
+      <Reveal>
+        <h2 className="mb-4 font-display text-sm font-medium uppercase tracking-widest text-studio-signal">
+          Por que existe StudioAI
+        </h2>
+      </Reveal>
+      <Reveal delay={0.1}>
+        <p className="font-serif text-2xl leading-relaxed text-studio-bone">
+          Grabar en condiciones perfectas casi nunca es posible: hay ruido de
+          calle, eco de sala, volumen desnivelado entre tomas. StudioAI hace
+          el trabajo de post-produccion que normalmente le tomaria horas a un
+          editor de audio, y te deja corregir el contenido con la misma
+          facilidad con la que editas un documento de texto.
+        </p>
+      </Reveal>
+    </section>
+  );
+}
+
+function EditorPreview() {
+  return (
+    <section className="border-y border-studio-line bg-studio-panel">
+      <div className="mx-auto grid max-w-6xl gap-10 px-6 py-20 md:grid-cols-2 md:items-center">
+        <Reveal>
+          <h2 className="mb-4 font-display text-3xl font-medium tracking-tight text-studio-bone">
+            Un editor que se siente como un documento
+          </h2>
+          <p className="text-studio-dim">
+            Cada palabra transcrita esta conectada a su posicion exacta en el
+            audio. Borra una palabra del texto y ese fragmento desaparece del
+            audio, con un pequeno cruce suave para que no se note el corte.
+          </p>
+        </Reveal>
+        <Reveal delay={0.2}>
+          <EditorMockup />
         </Reveal>
       </div>
     </section>
@@ -151,7 +215,7 @@ function FinalCta() {
           Empieza en segundos
         </h2>
         <p className="mb-8 text-studio-dim">
-          No necesitas cuenta ni instalar nada. Sube un audio y prueba el editor ahora mismo.
+          Gratis por ahora. No necesitas cuenta ni instalar nada.
         </p>
         <Link href="/editor/demo" className="inline-block rounded-md bg-studio-signal px-8 py-3 text-sm font-medium text-studio-bg transition-transform hover:scale-105 hover:opacity-90">
           Abrir el editor
@@ -165,7 +229,7 @@ function Footer() {
   return (
     <footer className="border-t border-studio-line px-6 py-8 text-center">
       <p className="font-mono text-xs text-studio-dim">
-        StudioAI, grabacion, mejora y edicion de audio con IA
+        StudioAI, hecho por Alejandro Veloz
       </p>
     </footer>
   );
